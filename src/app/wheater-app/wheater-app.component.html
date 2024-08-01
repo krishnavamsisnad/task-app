@@ -1,34 +1,35 @@
 <div class="row">
-  <div class="container mt-4">
-    <div class="firstpart">
+  <div class="container mt-4" >
+    <div class="left ">
       <div class="container mt-4">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="d-flex" >
-                <input [(ngModel)]="city" class="form-control" placeholder="Enter city name">
-                &nbsp;
-                <span (click)="addCity()" class="btn btn-primary mt-2">Add</span>
-              </div>
-              <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="d-flex">
+              <input [(ngModel)]="city" class="form-control" placeholder="Enter city name">
+              &nbsp;
+              <span (click)="addCity()" class="btn btn-primary mt-2">Add</span>
             </div>
+            <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
           </div>
-      
-              <h2>Recent Locations</h2>
-              <ul class="list-group">
-                <li *ngFor="let location of recentLocations" class=" d-flex ">
-                  <span>
-                    <img [src]="location.icon" alt="weather icon" class="me-2">
-                    {{ location.city }} - {{ location.temperature }}°C, {{ location.weather }}
-                  </span>
-                  <button (click)="refreshWeather(location)" class="btn btn-warning btn-sm me-2">Refresh</button>
-                  <button (click)="removeLocation(location)" class="btn btn-danger btn-sm">X</button>
-                </li>
-              </ul>
-            </div>
-          </div>
+        </div>
+  
+        <h2>Recent Locations</h2>
+        <ul class="list-group">
+          <li *ngFor="let location of recentLocations" class="d-flex">
+            <span>
+              <img [src]="location.icon" alt="weather icon" class="me-2">
+              {{ location.city }} - {{ location.temperature }}°C, {{ location.weather }}
+            </span>
+            <button (click)="refreshWeather(location)" class="btn btn-warning btn-sm me-2">Refresh</button>
+            <button (click)="removeLocation(location)" class="btn btn-danger btn-sm">X</button>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="container mt-6">
-    <div class="">
+  
+  <div class="container mt-6" >
+    <div class="rigth">
 
     </div>
 
