@@ -1,0 +1,14 @@
+<div class="container mt-4">
+    <h2>Counter App</h2>
+    <button class="btn btn-primary me-2" (click)="addCounter()">Add Counter</button>
+    <button class="btn btn-danger" (click)="resetAll()">Reset All</button>
+    <div *ngFor="let counter of counters" class="mt-2">
+      <p>Count: {{ counter.count }}</p>
+      <button class="btn btn-primary me-2" (click)="increment(counter)">Increment</button>
+      <button class="btn btn-secondary me-2"   (click)="decrement(counter)">Decrement</button>
+      <button class="btn btn-danger" (click)="deleteCounter(counter)">Delete</button>
+    </div>
+  </div>
+  
+  
+  

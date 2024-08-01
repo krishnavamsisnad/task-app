@@ -1,0 +1,3 @@
+<app-header [counterCount]="counterCount"></app-header>
+  
+<router-outlet (activate)="handleCountChange($event.counterCount)"></router-outlet>
