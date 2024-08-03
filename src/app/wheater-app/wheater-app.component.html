@@ -1,40 +1,51 @@
-<div class="row">
-  <div class="container mt-4" >
-    <div class="left ">
-      <div class="container mt-4">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="d-flex">
-              <input [(ngModel)]="city" class="form-control" placeholder="Enter city name">
-              &nbsp;
-              <span (click)="addCity()" class="btn btn-primary mt-2">Add</span>
-            </div>
-            <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
-          </div>
+<div class="container mt-4">
+  <div class="row">
+    <!-- Left Panel -->
+    <div class="col-md-4">
+      <div class="left-panel">
+        <div class="d-flex">
+          <input type="text" [(ngModel)]="cityName" placeholder="Type city name" class="form-control">
+          <button (click)="addCity()" class="btn btn-primary">+</button>
         </div>
-  
-        <h2>Recent Locations</h2>
-        <ul class="list-group">
-          <li *ngFor="let location of recentLocations" class="d-flex">
-            <span>
-              <img [src]="location.icon" alt="weather icon" class="me-2">
-              {{ location.city }} - {{ location.temperature }}°C, {{ location.weather }}
+        <div *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</div>
+        <ul>
+          <li *ngFor="let city of cities" (click)="selectCity(city)">
+            {{ city.name }} - {{ city.temperature }}°C
+            <span class="refresh-icon" (click)="refreshCity(city, $event)">
+              <i class="bi bi-arrow-clockwise"></i>
             </span>
-            <button (click)="refreshWeather(location)" class="btn btn-warning btn-sm me-2">Refresh</button>
-            <button (click)="removeLocation(location)" class="btn btn-danger btn-sm">X</button>
+            <span class="close-icon" (click)="removeCity(city, $event)">
+              <i class="bi bi-x-circle"></i>
+            </span>
           </li>
         </ul>
+        <button (click)="clearCities()" class="btn btn-secondary">Clear</button>
       </div>
     </div>
-  </div>
-  
-  <div class="container mt-6" >
-    <div class="rigth">
 
-    </div>
-
+    <!-- Right Panel -->
+    <!-- <div class="col-md-8">
+      <div class="right-panel p-3 border" *ngIf="forecast">
+        <h2>{{ forecast.city.name }}</h2>
+        <div class="weather-details">
+          <div class="weather-icon">
+            <img [src]="'https://openweathermap.org/img/wn/' + forecast.list[0].weather[0].icon + '.png'" alt="Weather icon">
+          </div>
+          <div class="weather-data">
+            <p>Temperature: {{ forecast.list[0].main.temp }}°C</p>
+            <p>Wind: {{ forecast.list[0].wind.speed }} m/s, {{ forecast.list[0].wind.deg }}°</p>
+            <p>Pressure: {{ forecast.list[0].main.pressure }} hPa</p>
+            <p>Description: {{ forecast.list[0].weather[0].description }}</p>
+          </div>
+        </div>
+        <div class="five-day-forecast mt-3">
+          <div class="day-forecast" *ngFor="let day of forecast.list | slice:0:5">
+            <p>{{ day.dt_txt | date:'EEE' }}</p>
+            <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'" alt="Weather icon" width="30">
+            <p>{{ day.main.temp }}°C</p>
+          </div>
+        </div>
+      </div>
+    </div> -->
   </div>
 </div>
-
-  
-  
