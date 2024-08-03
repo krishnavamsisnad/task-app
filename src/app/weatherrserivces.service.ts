@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +26,13 @@ export class WeatherrserivcesService {
   getHistory(lat: number, lon: number): Observable<any> {
     return this.http.get<any>(`${this.historyApiUrl}?lat=${lat}&lon=${lon}&appid=${this.apiKey}`);
   }
+
+  private counterCount = new BehaviorSubject<number>(0);
+
+  counterCount$ = this.counterCount
+
+  updateCounterCount(count: number) {
+    this.counterCount.next(count);
+  }
+
 }

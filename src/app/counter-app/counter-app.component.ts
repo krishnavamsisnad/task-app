@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
+import { WeatherrserivcesService } from '../weatherrserivces.service';
+import { Counter } from '../chatmodel';
 
 @Component({
   selector: 'app-counter-app',
@@ -9,41 +11,40 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './counter-app.component.css'
 })
 export class CounterAppComponent {
-  counters: { id: number, count: number }[] = [];
-  @Output() counterCountChange = new EventEmitter<number>();
+  counters: Counter[] = [];
+  counterId = 0;
 
-  
+  constructor(private counterService: WeatherrserivcesService) {}
+
   addCounter() {
-    this.counters.push({ id: Date.now(), count: 0 });
-    this.updateCounterCount();
+    this.counters.push({ id: this.counterId++, count: 0 });
+    this.updateNavbarCount();
   }
 
-  increment(counter: { id: number, count: number }) {
+  increment(counter: Counter) {
+ 
     counter.count++;
-    this.updateCounterCount();
   }
 
-  decrement(counter: { id: number, count: number }) {
-
-    if (counter.count> 0) {
+  decrement(counter: Counter) {
+    if(counter.count>0){
       counter.count--;
+ 
     }
-    this.updateCounterCount();
   }
 
-  deleteCounter(counter: { id: number, count: number }) {
+  deleteCounter(counter: Counter) {
     this.counters = this.counters.filter(c => c.id !== counter.id);
-    this.updateCounterCount();
+    this.updateNavbarCount();
   }
 
-  resetAll() {
+  resetCounters() {
     this.counters = [];
-    this.updateCounterCount();
+    this.updateNavbarCount();
   }
 
-  public updateCounterCount() {
-    this.counterCountChange.emit(this.counters.length);
+  updateNavbarCount() {
+    this.counterService.updateCounterCount(this.counters.length);
   }
-
   
 }

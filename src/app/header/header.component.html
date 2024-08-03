@@ -3,13 +3,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/counter">Counter <span class="badge bg-secondary">{{ counterCount }}</span></a>
+            <a class="nav-link active" aria-current="page" routerLink="/counter">Counter <span class="badge bg-secondary" *ngIf="counterCount>0">{{   counterCount  }}</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/wheater">Wheater</a>
+            <a class="nav-link active" routerLink="/wheater">Wheater</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-disabled="true" routerLink="/chat">Chatui</a>
+            <a class="nav-link active" aria-disabled="true" routerLink="/chatui">Chatui</a>
           </li>
         </ul>
       </div>
