@@ -14,7 +14,7 @@ export class ChatComponent {
   chatForm !: FormGroup ;
   messages: Message[] = [];
 
- private readonly BOT_MSGS: string[] = [
+ private readonly message: string[] = [
     "Hi, how are you?",
     "Ohh... I can't understand what you trying to say. Sorry!",
     "I like to play games... But I don't know how to play!",
@@ -59,8 +59,8 @@ export class ChatComponent {
   }
 
   botResponse() {
-    const randomIndex = this.random(0, this.BOT_MSGS.length - 1);
-    const msgText = this.BOT_MSGS[randomIndex];
+    const randomIndex = this.random(0, this.message.length - 1);
+    const msgText = this.message[randomIndex];
    // const delay = msgText.split(" ").length * 100;
 
     setTimeout(() => {

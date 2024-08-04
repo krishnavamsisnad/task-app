@@ -17,28 +17,34 @@ export class WheaterAppComponent implements OnInit {
   cities: { id: number, name: string, temperature: number, icon: string }[] = [];
   forecast: any;
   errorMessage: string = '';
+  weatherdata=[]
+  selectedCity: any;
 
   constructor(public http: WeatherrserivcesService) { }
 
   ngOnInit() {
-    // Initial load logic if needed
+    
   }
 
   addCity() {
     this.http.getWeather(this.cityName).subscribe({
       next: data => {
+    this.weatherdata=data
+    console.log(data)
         const city = {
           id: data.id,
-          name: this.cityName,
+          name:data.name,
           temperature: data.main.temp,
           icon: `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`
         };
+       console.log(city)
         if (this.cities.length >= 8) {
           this.cities.pop();
         }
         this.cities.unshift(city);
         this.cityName = '';
         this.errorMessage = '';
+        console.log(this.cities)
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage = 'City not found';
@@ -70,7 +76,8 @@ export class WheaterAppComponent implements OnInit {
   }
 
   selectCity(city: any) {
-    this.http.getForecast(city.id).subscribe({
+    this.selectedCity = city;
+    this.http.getForecast(city.name).subscribe({
       next: data => {
         this.forecast = data;
       },

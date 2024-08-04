@@ -64,3 +64,19 @@ button {
 .day-forecast {
   text-align: center;
 }
+
+.underline{
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bi-x-circle{
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.img-day{
+  width: 4rem;
+  height:4rem;
+}
