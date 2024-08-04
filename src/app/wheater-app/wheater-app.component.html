@@ -39,7 +39,7 @@
       <div class="right-panel">
       <div class="d-flex justify-content-between">
         <div>
-          <!-- <h4>{{ selectedCity.name }}</h4> -->
+          <h4>{{ selectedCity?.name }}</h4>
         </div>
         <div>
           <span class="close-icon ms-3" >
@@ -48,17 +48,21 @@
         </div>
       </div>
       <div class="d-flex">
-         <!-- <div>
-          <img [src]="selectedCity.icon" alt="Weather icon">
-        </div>
+          <div>
+            <img [src]="selectedCity?.icon" alt="Weather icon">
+          </div>
          <div class="ms-4 me-4">
-          <p>Temperature: {{ selectedCity.temperature }}°C</p>
-          <p *ngIf="forecast">Wind: {{ forecast.list[0].wind.speed }} m/s, {{ forecast.list[0].wind.deg }}°</p>
-          <p *ngIf="forecast">Pressure: {{ forecast.list[0].main.pressure }} hPa</p>
-          <p *ngIf="forecast">Description: {{ forecast.list[0].weather[0].description }}</p>
-
+          <p *ngIf="forecast">
+            Wind: {{ forecast.list?.[0]?.wind?.speed }} m/s, {{ forecast.list?.[0]?.wind?.deg }}°
+          </p>
+          <p *ngIf="forecast">
+            Pressure: {{ forecast.list?.[0]?.main?.pressure }} hPa
+          </p>
+          <p *ngIf="forecast">
+            Description: {{ forecast.list?.[0]?.weather?.[0]?.description }}
+          </p>
         </div>   
-      </div> -->
+      </div> 
 
       <!-- <div class="d-flex" *ngFor="let day of forecast.list | slice:0:5">
         <div class="d-flex flex-column align-items-center me-3">
@@ -66,7 +70,7 @@
           <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'" alt="Weather icon" width="30">
           <p>{{ day.main.temp }}°C</p>      
          </div>
-      </div> -->
+      </div>  -->
       </div>
     </div>
   </div>

@@ -23,7 +23,6 @@ export class WheaterAppComponent implements OnInit {
   constructor(public http: WeatherrserivcesService) { }
 
   ngOnInit() {
-    
   }
 
   addCity() {
@@ -31,6 +30,7 @@ export class WheaterAppComponent implements OnInit {
       next: data => {
     this.weatherdata=data
     console.log(data)
+
         const city = {
           id: data.id,
           name:data.name,
@@ -50,6 +50,7 @@ export class WheaterAppComponent implements OnInit {
         this.errorMessage = 'City not found';
       }
     });
+
   }
 
   refreshCity(city: any, event: Event) {
@@ -76,14 +77,22 @@ export class WheaterAppComponent implements OnInit {
   }
 
   selectCity(city: any) {
+    if (!city || !city.name) {
+      alert('Invalid city selected');
+      return;
+    }
+    
     this.selectedCity = city;
-    this.http.getForecast(city.name).subscribe({
+    this.http.getWeather(city.name).subscribe({
       next: data => {
         this.forecast = data;
+        console.log(this.forecast);
       },
       error: (error: HttpErrorResponse) => {
         alert('Failed to load forecast');
+        console.error('Failed to load forecast:', error);
       }
     });
   }
+  
 }
