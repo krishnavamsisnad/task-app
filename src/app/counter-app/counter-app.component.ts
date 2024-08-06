@@ -22,7 +22,6 @@ export class CounterAppComponent {
   }
 
   increment(counter: Counter) {
- 
     counter.count++;
   }
 

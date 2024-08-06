@@ -15,10 +15,7 @@ export class WeatherrserivcesService {
   apiUrl = environment.ApiUrl;
   
 
-  constructor(
-
-    public http:HttpClient
-  ) { }
+  constructor(public http:HttpClient) { }
 
 
   getWeather(city: string): Observable<any> {
