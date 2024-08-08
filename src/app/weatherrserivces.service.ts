@@ -18,10 +18,7 @@ export class WeatherrserivcesService {
   counterData$ = new BehaviorSubject<Counter[]>([]);
   counter_data = signal<Counter[]>([]);
 
-  constructor(
-
-    public http:HttpClient
-  ) { }
+  constructor(public http:HttpClient) { }
 
 
   getWeather(city: string): Observable<any> {
