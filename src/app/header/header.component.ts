@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { WeatherrserivcesService } from '../weatherrserivces.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Counter } from '../chatmodel';
 
 @Component({
   selector: 'app-header',
@@ -13,14 +15,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class HeaderComponent {
 
-  counterCount: number = 0;
+  counterCount$!: Observable<Counter[]>;
 
-  constructor(private counterService: WeatherrserivcesService) {}
+  constructor(public counterService: WeatherrserivcesService) {}
 
   ngOnInit() {
-    this.counterService.counterCount$.subscribe(count => {
-      this.counterCount = count;
-    });
+    this.counterCount$ = this.counterService.counterData$;
   }
   
 }

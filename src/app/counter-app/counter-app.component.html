@@ -4,7 +4,8 @@
     &nbsp;
     <button class="btn btn-primary me-2" (click)="addCounter()">Add </button>
 
-    <div *ngFor="let counter of counters" class="mt-2">
+    <!-- <div *ngFor="let counter of counters$ | async" class="mt-2"> -->
+      <div *ngFor="let counter of counterService.counter_data()" class="mt-2">
       <b class="btn btn-primary">{{ counter.count }}</b> &nbsp;
       <button class="btn btn-secondary me-2" (click)="increment(counter)">Increment</button>
       <button class="btn btn-secondary me-2"   (click)="decrement(counter)">Decrement</button>

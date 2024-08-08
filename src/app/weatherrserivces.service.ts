@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './environment/environment';
+import { Counter } from './chatmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class WeatherrserivcesService {
 
    private forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast';
   apiUrl = environment.ApiUrl;
-  
+
+  counterData$ = new BehaviorSubject<Counter[]>([]);
+  counter_data = signal<Counter[]>([]);
 
   constructor(
 
@@ -33,12 +36,5 @@ export class WeatherrserivcesService {
   //   return this.http.get<any>(`${this.forecastUrl}?id=${cityId}&appid=${this.apiKey}&units=metric`);
   // }
 
-  private counterCount = new BehaviorSubject<number>(0);
-
-  counterCount$ = this.counterCount
-
-  updateCounterCount(count: number) {
-    this.counterCount.next(count);
-  }
 
 }

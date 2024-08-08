@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { WeatherrserivcesService } from '../weatherrserivces.service';
 import { Counter } from '../chatmodel';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-counter-app',
@@ -10,41 +11,42 @@ import { Counter } from '../chatmodel';
   templateUrl: './counter-app.component.html',
   styleUrl: './counter-app.component.css'
 })
-export class CounterAppComponent {
-  counters: Counter[] = [];
+export class CounterAppComponent implements OnInit {
+  counters$!: Observable<Counter[]>;
   counterId = 0;
 
-  constructor(private counterService: WeatherrserivcesService) {}
+  constructor(public counterService: WeatherrserivcesService) {}
+
+  ngOnInit(): void {
+    this.counters$ = this.counterService.counterData$;
+  }
 
   addCounter() {
-    this.counters.push({ id: this.counterId++, count: 0 });
-    this.updateNavbarCount();
+    // const count_data:any = this.counterService.counterData$.value;
+    // const updated_data = [...count_data, { id: this.counterId++, count: 0 }];
+    // this.counterService.counterData$.next(updated_data);
+    this.counterService.counter_data.update((value) => [...value, { id: this.counterId++, count: 0 }]);
   }
 
   increment(counter: Counter) {
- 
     counter.count++;
   }
 
   decrement(counter: Counter) {
     if(counter.count>0){
       counter.count--;
- 
     }
   }
 
   deleteCounter(counter: Counter) {
-    this.counters = this.counters.filter(c => c.id !== counter.id);
-    this.updateNavbarCount();
+    // const count_data = this.counterService.counterData$.value
+    // this.counterService.counterData$.next(count_data.filter(c => c.id !== counter.id));
+    this.counterService.counter_data.update((value) => value.filter(c => c.id !== counter.id));
   }
 
   resetCounters() {
-    this.counters = [];
-    this.updateNavbarCount();
-  }
-
-  updateNavbarCount() {
-    this.counterService.updateCounterCount(this.counters.length);
+    // this.counterService.counterData$.next([]);
+    this.counterService.counter_data.update((value) => []);
   }
   
 }
