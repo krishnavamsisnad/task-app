@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from './environment/environment';
@@ -18,20 +18,20 @@ export class WeatherrserivcesService {
   counterData$ = new BehaviorSubject<Counter[]>([]);
   counter_data = signal<Counter[]>([]);
 
+
+
+   
+
+
   constructor(public http:HttpClient) { }
 
-
   getWeather(city: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?q=${city}&appid=${this.apiKey}`);
+    return this.http.get<any>(`${environment.ApiUrl}?q=${city}&appid=${this.apiKey}&units=metric`);
   }
-  // getForecast(cityId: number): Observable<any> {
-  //   const startDate = Math.floor(Date.now() / 1000) - 7 * 24 * 3600; // 7 days ago
-  //   const endDate = Math.floor(Date.now() / 1000); // now
-  //   return this.http.get(`${this.forecastUrl}?id=${cityId}&type=hour&start=${startDate}&end=${endDate}&appid=${this.apiKey}`);
-  // }
-  // getForecast(cityId: number): Observable<any> {
-  //   return this.http.get<any>(`${this.forecastUrl}?id=${cityId}&appid=${this.apiKey}&units=metric`);
-  // }
+
+  getForecast(cityId: number): Observable<any> {
+    return this.http.get<any>(`${this.forecastUrl}?id=${cityId}&appid=${this.apiKey}&units=metric`);
+  }
 
 
 }

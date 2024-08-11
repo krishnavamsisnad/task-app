@@ -47,32 +47,43 @@
           </span>
         </div>
       </div>
-      <div class="d-flex">
-          <div>
-            <img [src]="selectedCity?.icon" alt="Weather icon">
-          </div>
-         <div class="ms-4 me-4">
+     
+      <div class="d-flex mt-3" *ngIf="selectedCity">
+        <img [src]="selectedCity?.icon" alt="Weather icon" width="50">
+        <div class="ms-4">
           <p *ngIf="forecast">
-            Wind: {{ forecast.list?.[0]?.wind?.speed }} m/s, {{ forecast.list?.[0]?.wind?.deg }}°
+            Wind: {{ forecast.list[0].wind.speed }} m/s, {{ forecast.list[0].wind.deg }}°
           </p>
           <p *ngIf="forecast">
-            Pressure: {{ forecast.list?.[0]?.main?.pressure }} hPa
+            Pressure: {{ forecast.list[0].main.pressure }} hPa
           </p>
           <p *ngIf="forecast">
-            Description: {{ forecast.list?.[0]?.weather?.[0]?.description }}
+            Description: {{ forecast.list[0].weather[0].description }}
           </p>
-        </div>   
-      </div> 
-
-      <!-- <div class="d-flex" *ngFor="let day of forecast.list | slice:0:5">
-        <div class="d-flex flex-column align-items-center me-3">
-          <p>{{ day.dt_txt | date:'EEE' }}</p>
-          <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'" alt="Weather icon" width="30">
-          <p>{{ day.main.temp }}°C</p>      
-         </div>
-      </div>  -->
+        </div>
       </div>
+      
+      <div class="d-flex justify-content-between mt-4">
+        <h5>5-Day Forecast:</h5>
+      </div>
+      <div class="d-flex" *ngFor="let day of forecast?.list | slice:0:5">
+        <div *ngFor="let day of forecast?.list | slice:0:5">
+          <div class="d-flex flex-column align-items-center me-3">
+            <p>{{ day.dt_txt | date:'EEE' }}</p>
+            <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'" alt="Weather icon" width="30">
+            <p>{{ day.main.temp }}°C</p>      
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div *ngIf="!selectedCity" class="text-center mt-5">
+      <p>Select a city to see detailed weather information.</p>
+    </div>
+  
+
+      
+      
     </div>
   </div>
 </div>
-

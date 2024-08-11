@@ -3,6 +3,7 @@ import { WeatherrserivcesService } from '../weatherrserivces.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Forecast } from './wheater-app.model';
 
 @Component({
   selector: 'app-wheater-app',
@@ -15,7 +16,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class WheaterAppComponent implements OnInit {
   cityName: string = '';
   cities: { id: number, name: string, temperature: number, icon: string }[] = [];
-  forecast: any;
+  forecast :Forecast| null=null;
   errorMessage: string = '';
   weatherdata=[]
   selectedCity: any;
@@ -23,7 +24,7 @@ export class WheaterAppComponent implements OnInit {
   constructor(public http: WeatherrserivcesService) { }
 
   ngOnInit() {
-  }
+ }
 
   addCity() {
     this.http.getWeather(this.cityName).subscribe({
@@ -77,20 +78,33 @@ export class WheaterAppComponent implements OnInit {
   }
 
   selectCity(city: any) {
-    if (!city || !city.name) {
+    if (city && city.name) {
+      this.selectedCity = city;
+  
+      this.http.getForecast(city.id).subscribe({
+        next: (data: Forecast) => {
+          this.forecast = data;
+          console.log(this.forecast)
+        },
+        error: (error: HttpErrorResponse) => {
+          alert('Failed to load forecast');
+          console.error('Failed to load forecast:', error);
+        }
+      });
+    } else {
       alert('Invalid city selected');
-      return;
     }
-    
-    this.selectedCity = city;
+  }
+  
+  refresshCity(city: any, event: Event) {
+    event.stopPropagation();
     this.http.getWeather(city.name).subscribe({
       next: data => {
-        this.forecast = data;
-        console.log(this.forecast);
+        city.temperature = data.main.temp;
+        city.icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
       },
       error: (error: HttpErrorResponse) => {
-        alert('Failed to load forecast');
-        console.error('Failed to load forecast:', error);
+        alert('Failed to refresh city');
       }
     });
   }

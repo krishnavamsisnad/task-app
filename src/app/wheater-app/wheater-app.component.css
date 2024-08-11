@@ -4,12 +4,12 @@
 }
 
 .left-panel {
-  border: 2px solid #020405; /* Blue border for left panel */
-  height: 100%;
+  border: 2px solid #020405;
+  height: 100vh;
 }
 
 .right-panel {
-  border: 2px solid #0b0c0b; /* Green border for right panel */
+  border: 2px solid #0b0c0b;
   height: 100%;
 }
 

@@ -29,6 +29,8 @@ export class ChatComponent {
 
   constructor(private fb: FormBuilder){}
   ngOnInit(): void {
+    this.appendMessage(this.send_message, this.send_img, 'left', "Hi, welcome to SimpleChat! Go ahead and send me a message. 😄");
+
     this.chatForm = this.fb.group({
       message: ['']
     });

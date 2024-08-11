@@ -1,14 +1,15 @@
-<section class="msger">
-    <header class="msger-header">
-      <div class="msger-header-title">
+<div class="main">
+  <section class="message" >
+    <header class="message-header">
+      <div class="message-header-title">
         <i class="fas fa-comment-alt"></i> SimpleChat
       </div>
-      <div class="msger-header-options">
+      <div class="message-header-options">
         <span><i class="fas fa-cog"></i></span>
       </div>
     </header>
   
-    <main class="msger-chat">
+    <main class="message-chat">
       <div *ngFor="let msg of messages" [ngClass]="{'left-msg': msg.side === 'left', 'right-msg': msg.side === 'right'}" class="msg">
         <div class="msg-img" [style.backgroundImage]="'url(' + msg.img + ')'"></div>
         <div class="msg-bubble">
@@ -21,9 +22,10 @@
       </div>
     </main>
   
-    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="msger-inputarea">
-      <input formControlName="message" type="text" class="msger-input" placeholder="Enter your message...">
-      <button type="submit" class="msger-send-btn">Send</button>
+    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="message-inputarea">
+      <input formControlName="message" type="text" class="message-input" placeholder="Enter your message...">
+      <button type="submit" class="message-send-btn">Send</button>
     </form>
   </section>
+</div>
   
