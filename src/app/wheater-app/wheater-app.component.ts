@@ -20,6 +20,7 @@ export class WheaterAppComponent implements OnInit {
   errorMessage: string = '';
   weatherdata=[]
   selectedCity: any;
+  searchTerm: string = '';
 
   constructor(public http: WeatherrserivcesService) { }
 
@@ -108,5 +109,9 @@ export class WheaterAppComponent implements OnInit {
       }
     });
   }
-  
+  filteredCities() {
+    return this.cities.filter(city =>
+      city.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 }
