@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, switchMap } from 'rxjs';
 import { environment } from './environment/environment';
 import { Counter } from './chatmodel';
 
@@ -9,29 +9,30 @@ import { Counter } from './chatmodel';
 })
 export class WeatherrserivcesService {
    
-  private apiKey = 'd4594364698122bfd1c4b3eb5f2ff19f';
-  // private historyApiUrl = 'https://history.openweathermap.org/data/2.5/history/city';
-
-   private forecastUrl = 'https://api.openweathermap.org/data/2.5/forecast';
-  apiUrl = environment.ApiUrl;
-
+  private apiKey = environment.apiKey;
+  private apiUrl = environment.ApiUrl;
   counterData$ = new BehaviorSubject<Counter[]>([]);
   counter_data = signal<Counter[]>([]);
-
-
-
-   
-
 
   constructor(public http:HttpClient) { }
 
   getWeather(city: string): Observable<any> {
-    return this.http.get<any>(`${environment.ApiUrl}?q=${city}&appid=${this.apiKey}&units=metric`);
+    return this.http.get<any>(`${this.apiUrl}/weather?q=${city}&appid=${this.apiKey}`);
   }
 
-  getForecast(cityId: number): Observable<any> {
-    return this.http.get<any>(`${this.forecastUrl}?id=${cityId}&appid=${this.apiKey}&units=metric`);
+  getForecast(lat:number, log:number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/forecast?lat=${lat}&lon=${log}&cnt=5&appid=${this.apiKey}`);
   }
 
-
+  getCityForecast(city:string){
+    return this.getWeather(city).pipe(
+      switchMap((res:any) => {
+        if(res && res.name.toLowerCase() === res.name.toLowerCase()){
+          return this.getForecast(res.coord.lat, res.coord.lon)
+        } else {
+          return EMPTY
+        }
+      })
+    )
+  }
 }
