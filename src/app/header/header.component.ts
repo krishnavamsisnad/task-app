@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component,  } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { WeatherrserivcesService } from '../weatherrserivces.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Counter } from '../chatmodel';
+import { Counter, List } from '../chatmodel';
+import { PraticualrService } from '../praticualr.service';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +17,13 @@ import { Counter } from '../chatmodel';
 export class HeaderComponent {
 
   counterCount$!: Observable<Counter[]>;
+  listdata$!:Observable<List[]>
 
-  constructor(public counterService: WeatherrserivcesService) {}
+  constructor(public counterService: WeatherrserivcesService,public tolist:PraticualrService) {}
 
   ngOnInit() {
     this.counterCount$ = this.counterService.counterData$;
+    this.listdata$=this.tolist.passingdata$
   }
   
 }

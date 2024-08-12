@@ -1,0 +1,17 @@
+<p>todolist works!</p>
+<form  [formGroup]="listform" >
+    <input type="text" formControlName="data">
+
+    <button (click)="addData()">add</button>
+</form>
+<div>
+    <ul >
+      <li *ngFor="let listdata of listdats$ | async; index as i">
+           
+            {{ listdata.employename }} &nbsp;
+            
+            <button (click)="deletrow(i)">delete</button>
+        </li>
+       
+    </ul>
+</div>

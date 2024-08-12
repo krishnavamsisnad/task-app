@@ -9,4 +9,7 @@ export interface Message {
     id: number;
     count: number;
   }
+  export interface List{
   
+    employename:string
+  }
