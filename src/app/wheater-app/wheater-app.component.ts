@@ -25,6 +25,7 @@ export class WheaterAppComponent implements OnInit {
   constructor(public http: WeatherrserivcesService) { }
 
   ngOnInit() {
+    this.addCity()
  }
 
   addCity() {
