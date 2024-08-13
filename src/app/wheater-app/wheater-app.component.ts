@@ -33,16 +33,23 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
     }
     this.apiSubscription = this.http.getCityForecast(this.cityName).subscribe({
       next: data => {
-        if(data.cod === '200' && data.city.name.toLowerCase() === this.cityName.toLowerCase()){
-          const cites_data = this.cities.value;
-        if (cites_data.length >= 8) {
-          cites_data.pop();
-        }
-        cites_data.unshift(data);
-        this.cities.next(cites_data);
-        this.selectedCity = data;
-        this.cityName = '';
-        this.errorMessage = '';
+        if (data.cod === '200' && data.city.name.toLowerCase() === this.cityName.toLowerCase()) {
+          let citiesData = this.cities.value; 
+          console.log("Current cities:", citiesData);
+        
+          if (citiesData.length >= 8) {
+            citiesData.pop();
+            console.log("Removed the last city, new list:", citiesData);
+          }
+        
+          citiesData = [data, ...citiesData]; 
+          this.cities.next(citiesData); 
+          console.log("Updated cities list:", citiesData);
+        
+          this.selectedCity = data;
+          this.cityName = '';
+          this.errorMessage = ''; 
+          console.log("City added successfully. Selected city:", this.selectedCity);
         }
       },
       error: (error: HttpErrorResponse) => {
