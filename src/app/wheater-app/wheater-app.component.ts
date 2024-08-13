@@ -21,6 +21,7 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
   weatherdata=[]
   selectedCity: any;
   apiSubscription!: Subscription;
+  searchTerm: string = '';
 
   constructor(public http: WeatherrserivcesService) { }
 
@@ -134,4 +135,21 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
     }
   }
   
+  refresshCity(city: any, event: Event) {
+    event.stopPropagation();
+    this.http.getWeather(city.name).subscribe({
+      next: data => {
+        city.temperature = data.main.temp;
+        city.icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+      },
+      error: (error: HttpErrorResponse) => {
+        alert('Failed to refresh city');
+      }
+    });
+  }
+  // filteredCities() {
+  //   return this.cities.filter(city =>
+  //     city.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+  //   );
+  // }
 }
