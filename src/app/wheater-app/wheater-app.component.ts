@@ -114,25 +114,10 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
       });
   }
   
-  // refreshCity(city: any, event: Event) {
-  //   event.stopPropagation();
-  //   this.http.getWeather(city.name).subscribe({
-  //     next: data => {
-  //       if(data.cod === '200' && data.city.name.toLowerCase() === city.name.toLowerCase()){
-  //       city.temperature = data.main.temp;
-  //       city.icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
-  //       }
-  //     },
-  //     error: (error: HttpErrorResponse) => {
-  //       alert('Failed to refresh city');
-  //     }
-  //   });
-  // }
-
-  ngOnDestroy(): void {
-    if(this.apiSubscription){
-      this.apiSubscription.unsubscribe();
-    }
+  filteredCities() {
+    return this.cities.value.filter((city: any) =>
+      city.city.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
   
   refresshCity(city: any, event: Event) {
@@ -147,9 +132,13 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // filteredCities() {
-  //   return this.cities.filter(city =>
-  //     city.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-  //   );
-  // }
+
+  ngOnDestroy(): void {
+    if(this.apiSubscription){
+      this.apiSubscription.unsubscribe();
+    }
+  }
+  
+  
+  
 }
