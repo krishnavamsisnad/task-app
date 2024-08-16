@@ -6,9 +6,10 @@
 .left-panel {
   border: 2px solid #020405;
   height: 100vh;
+  position: relative;
 }
 
-.right-panel {
+ .right-panel {
   border: 2px solid #0b0c0b;
   height: 100%;
 }
@@ -79,4 +80,9 @@ button {
 .img-day{
   width: 4rem;
   height:4rem;
+}
+.button-custom {
+  position: absolute;
+  bottom: 25px;
+  right:  30px;
 }

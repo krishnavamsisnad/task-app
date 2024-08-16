@@ -75,7 +75,8 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
 
   removeCity(cityid: string, event: Event) {
     event.stopPropagation();
-    this.cities.next(this.cities.value.filter((c:any) => c.city.id !== cityid));
+   const updatedCities= this.cities.next(this.cities.value.filter((c:any) => c.city.id !== cityid));
+    this.cities.next(updatedCities); 
   }
 
   clearCities() {
@@ -106,6 +107,7 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
         // Debug logs (can be removed in production)
         console.log(this.selectedCity, cities);
       }
+      
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -119,6 +121,7 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
       city.city.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
+  
   
   refresshCity(city: any, event: Event) {
     event.stopPropagation();

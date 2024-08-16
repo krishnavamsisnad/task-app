@@ -30,8 +30,8 @@
             </div>
           </div>
         </div>
-        <div class="w-100 d-flex justify-content-end mt-2" *ngIf="(cities | async)?.length !== 0">
-          <button (click)="clearCities()" class="btn btn-secondary text-end">Clear</button>
+        <div class="w-100 d-flex justify-content-end mt-2 "  *ngIf="(cities | async)?.length !== 0">
+          <button (click)="clearCities()" class="btn btn-secondary text-end button-custom">Clear</button>
         </div>
       </div>
     </div>
@@ -74,9 +74,11 @@
         </div>
       </div>
     </div>
-    <div *ngIf="(cities | async)?.length === 0" class="text-center mt-5">
+   <div class="right-panel"  *ngIf="(cities | async)?.length === 0">
+    <div *ngIf="(cities | async)?.length === 0" class="text-center  mt-5  ">
       <p>Select a city to see detailed weather information.</p>
     </div>
+   </div>
     </div>
   </div>
 </div>
