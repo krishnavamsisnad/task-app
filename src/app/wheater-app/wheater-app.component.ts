@@ -26,7 +26,7 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
   constructor(public http: WeatherrserivcesService) { }
 
   ngOnInit() {
-
+this.filteredCities()
  }
 
   addCity() {
@@ -53,6 +53,7 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
           this.errorMessage = ''; 
           console.log("City added successfully. Selected city:", this.selectedCity);
         }
+        this.filteredCities()
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage = 'City not found';
@@ -108,7 +109,7 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
         // Debug logs (can be removed in production)
         console.log(this.selectedCity, cities);
       }
-      
+        this.filteredCities()
           }
         },
         error: (error: HttpErrorResponse) => {
