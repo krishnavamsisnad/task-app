@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WeatherrserivcesService } from '../weatherrserivces.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {  HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { KelvinToCelsiusPipe } from '../celsius.pipe';
 
@@ -10,7 +10,7 @@ import { KelvinToCelsiusPipe } from '../celsius.pipe';
   selector: 'app-wheater-app',
   standalone: true,
   imports: [CommonModule, FormsModule, KelvinToCelsiusPipe],
-  providers: [WeatherrserivcesService, HttpClient],
+  providers: [WeatherrserivcesService],
   templateUrl: './wheater-app.component.html',
   styleUrls: ['./wheater-app.component.css']
 })
@@ -26,6 +26,7 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
   constructor(public http: WeatherrserivcesService) { }
 
   ngOnInit() {
+
  }
 
   addCity() {
