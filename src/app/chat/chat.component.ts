@@ -64,7 +64,7 @@ export class ChatComponent {
   botResponse() {
     const randomIndex = this.random(0, this.message.length - 1);
     const msgText = this.message[randomIndex];
-   // const delay = msgText.split(" ").length * 100;
+
 
     setTimeout(() => {
       this.appendMessage(this.reviced_name, this.recived_img, 'left', msgText);
