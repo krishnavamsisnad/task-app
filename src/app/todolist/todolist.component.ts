@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PraticualrService } from '../praticualr.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { List } from '../chatmodel';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -14,15 +14,19 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './todolist.component.css'
 })
 export class TodolistComponent implements OnInit {
-
+      reciviceddata!:number
     listdats$!:Observable<List[]>
       listform!:FormGroup
+      subiction!:Subscription
+
    constructor(public tolist:PraticualrService, public fb:FormBuilder){}
 
 ngOnInit(): void {
   this.listdats$=this.tolist.passingdata$
   this.intinationsfrom()
-  
+  this.subiction=this.tolist.pasingsdata$.subscribe((va)=> {
+    this.reciviceddata=va
+  })
 }
 
 intinationsfrom(){
@@ -51,6 +55,7 @@ deletrow(i: number) {
   this.tolist.passingdata$.next([...datanew]); 
   this.listform.reset();
 }
+
 
 }
 
