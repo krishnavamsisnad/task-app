@@ -1,31 +1,29 @@
-<div class="main">
-  <section class="message" >
-    <header class="message-header">
-      <div class="message-header-title">
-        <i class="fas fa-comment-alt"></i> SimpleChat
-      </div>
-      <div class="message-header-options">
-        <span><i class="fas fa-cog"></i></span>
-      </div>
-    </header>
-  
-    <main class="message-chat">
-      <div *ngFor="let msg of messages" [ngClass]="{'left-msg': msg.side === 'left', 'right-msg': msg.side === 'right'}" class="msg">
-        <div class="msg-img" [style.backgroundImage]="'url(' + msg.img + ')'"></div>
-        <div class="msg-bubble">
-          <div class="msg-info">
-            <div class="msg-info-name">{{msg.name}}</div>
-            <div class="msg-info-time">{{msg.time}}</div>
-          </div>
-          <div class="msg-text">{{msg.text}}</div>
+<div class="msger">
+  <header class="msger-header">
+    <div class="msger-header-title">
+      SimpleChat
+    </div>
+  </header>
+
+  <main class="msger-chat">
+    <div *ngFor="let msg of messages" [ngClass]="{'msg-left': msg.side === 'left', 'msg-right': msg.side === 'right'}" class="msg">
+      <div class="msg-img" [ngStyle]="{'background-image': 'url(' + msg.img + ')'}"></div>
+
+      <div class="msg-bubble">
+        <div class="msg-info">
+          <div class="msg-info-name">{{ msg.name }}</div>
+          <div class="msg-info-time">{{ msg.time }}</div>
+        </div>
+
+        <div class="msg-text">
+          {{ msg.text }}
         </div>
       </div>
-    </main>
-  
-    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="message-inputarea">
-      <input formControlName="message" type="text" class="message-input" placeholder="Enter your message...">
-      <button type="submit" class="message-send-btn">Send</button>
-    </form>
-  </section>
+    </div>
+  </main>
+
+  <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="msger-inputarea">
+    <input type="text" formControlName="message" class="msger-input" placeholder="Enter your message...">
+    <button type="submit" class="msger-send-btn">Send</button>
+  </form>
 </div>
-  
