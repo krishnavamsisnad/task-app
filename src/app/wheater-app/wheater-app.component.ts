@@ -78,7 +78,7 @@ this.filteredCities()
   removeCity(cityid: string, event: Event) {
     event.stopPropagation();
    const updatedCities= this.cities.next(this.cities.value.filter((c:any) => c.city.id !== cityid));
-    this.cities.next(updatedCities); 
+   // this.cities.next(updatedCities); 
   }
 
   clearCities() {

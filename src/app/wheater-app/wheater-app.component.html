@@ -67,13 +67,14 @@
       <div class="d-flex justify-content-between mt-4">
         <h5>5-Day Forecast:</h5>
       </div>
-      <div *ngFor="let day of selectedCity.list">
-          <div class="d-flex flex-column align-items-center me-3">
-            <p>{{ day.dt_txt | date:'EEE' }}</p>
-            <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'" alt="Weather icon" width="30">
-            <p>{{ day.main.temp }}°C</p>      
+      <div class="d-flex flex-row">
+        <div *ngFor="let day of selectedCity.list" class="d-flex flex-column align-items-center me-3">
+          <p>{{ day.dt_txt | date:'EEE' }}</p>
+          <img [src]="'https://openweathermap.org/img/wn/' + day.weather[0].icon + '.png'" alt="Weather icon" width="30">
+          <p>{{ day.main.temp }}°C</p>
         </div>
       </div>
+      
     </div>
    <div class="right-panel"  *ngIf="(cities | async)?.length === 0">
     <div *ngIf="(cities | async)?.length === 0" class="text-center  mt-5  ">
