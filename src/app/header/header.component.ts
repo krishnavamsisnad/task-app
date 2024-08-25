@@ -15,12 +15,6 @@ import { Counter } from '../chatmodel';
 })
 export class HeaderComponent {
 
-  counterCount$!: Observable<Counter[]>;
-
   constructor(public counterService: WeatherrserivcesService) {}
-
-  ngOnInit() {
-    this.counterCount$ = this.counterService.counterData$;
-  }
   
 }

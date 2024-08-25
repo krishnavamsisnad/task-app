@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, single, switchMap } from 'rxjs';
 import { environment } from './environment/environment';
-import { Counter } from './chatmodel';
+import { Counter, Message } from './chatmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,9 @@ export class WeatherrserivcesService {
    
   private apiKey = environment.apiKey;
   private apiUrl = environment.ApiUrl;
-  counterData$ = new BehaviorSubject<Counter[]>([]);
   counter_data = signal<Counter[]>([]);
+  cities_data = signal<any[]>([]);
+  send_message = signal<Message[]>([])
 
   constructor(public http:HttpClient) { }
 

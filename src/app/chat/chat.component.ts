@@ -2,6 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Message } from '../chatmodel';
 import { CommonModule } from '@angular/common';
+import { WeatherrserivcesService } from '../weatherrserivces.service';
 
 @Component({
   selector: 'app-chat',
@@ -12,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ChatComponent implements AfterViewInit {
   chatForm!: FormGroup;
-  messages: Message[] = [];
+
 
   private readonly message: string[] = [
     "Hi, how are you?",
@@ -27,11 +28,14 @@ export class ChatComponent implements AfterViewInit {
   readonly received_name: string = "sai";
   readonly send_message: string = "bot";
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, public http:WeatherrserivcesService) {}
 
   ngOnInit(): void {
-    this.appendMessage(this.send_message, this.send_img, 'left', "Hi, welcome to SimpleChat! Go ahead and send me a message. 😄");
+    if(this.http.send_message().length === 0){
+      this.appendMessage(this.send_message, this.send_img, 'left', "Hi, welcome to SimpleChat! Go ahead and send me a message. 😄");
     this.appendMessage(this.received_name, this.received_img, 'right', "Hi how are you . 😄");
+    }
+    
 
     this.chatForm = this.fb.group({
       message: ['']
@@ -58,8 +62,7 @@ export class ChatComponent implements AfterViewInit {
       text,
       time: this.formatDate(new Date())
     };
-
-    this.messages.push(msg);
+    this.http.send_message.update((value) => [...value, msg])
     setTimeout(() => {
       this.scrollToBottom();
     }, 1000);

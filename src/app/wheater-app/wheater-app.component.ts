@@ -3,20 +3,20 @@ import { WeatherrserivcesService } from '../weatherrserivces.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {  HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { KelvinToCelsiusPipe } from '../celsius.pipe';
+import { SearchpipePipe } from '../searchpipe.pipe';
 
 @Component({
   selector: 'app-wheater-app',
   standalone: true,
-  imports: [CommonModule, FormsModule, KelvinToCelsiusPipe],
+  imports: [CommonModule, FormsModule, KelvinToCelsiusPipe,SearchpipePipe],
   providers: [WeatherrserivcesService],
   templateUrl: './wheater-app.component.html',
   styleUrls: ['./wheater-app.component.css']
 })
-export class WheaterAppComponent implements OnInit, OnDestroy {
+export class WheaterAppComponent implements OnDestroy {
   cityName: string = '';
-  cities = new BehaviorSubject<any>([]);
   errorMessage: string = '';
   weatherdata=[]
   selectedCity: any;
@@ -25,10 +25,6 @@ export class WheaterAppComponent implements OnInit, OnDestroy {
 
   constructor(public http: WeatherrserivcesService) { }
 
-  ngOnInit() {
-this.filteredCities()
- }
-
   addCity() {
     if(this.cityName === ''){
       return
@@ -36,7 +32,7 @@ this.filteredCities()
     this.apiSubscription = this.http.getCityForecast(this.cityName).subscribe({
       next: data => {
         if (data.cod === '200' && data.city.name.toLowerCase() === this.cityName.toLowerCase()) {
-          let citiesData = this.cities.value; 
+          let citiesData = this.http.cities_data(); 
           console.log("Current cities:", citiesData);
         
           if (citiesData.length >= 8) {
@@ -45,7 +41,7 @@ this.filteredCities()
           }
         
           citiesData = [data, ...citiesData]; 
-          this.cities.next(citiesData); 
+          this.http.cities_data.set(citiesData)
           console.log("Updated cities list:", citiesData);
         
           this.selectedCity = data;
@@ -53,7 +49,6 @@ this.filteredCities()
           this.errorMessage = ''; 
           console.log("City added successfully. Selected city:", this.selectedCity);
         }
-        this.filteredCities()
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage = 'City not found';
@@ -77,21 +72,23 @@ this.filteredCities()
 
   removeCity(cityid: string, event: Event) {
     event.stopPropagation();
-   const updatedCities= this.cities.next(this.cities.value.filter((c:any) => c.city.id !== cityid));
-   // this.cities.next(updatedCities); 
+    console.log(this.selectedCity);
+    if(this.selectedCity.city.id === cityid) {
+      this.selectedCity = null;
+     }
+   this.http.cities_data.update ((value) => value.filter((c:any) => c.city.id !== cityid));
   }
 
   clearCities() {
-    this.cities.next([]);
+    this.http.cities_data.update((val) => []);
   }
 
   selectCity(city: any) {
-    console.log(city);
       this.apiSubscription = this.http.getForecast(city.coord.lat, city.coord.lon).subscribe({
         next: (data: any) => {
           if(data.cod === '200' && data.city.name.toLowerCase() === city.name.toLowerCase()){
           // Get the current cities list from the BehaviorSubject
-      const cities = this.cities.getValue();
+      const cities = this.http.cities_data();
       
       // Find the index of the city in the array
       const cityIndex = cities.findIndex((t: any) => t.city.id === city.id);
@@ -101,27 +98,19 @@ this.filteredCities()
         cities[cityIndex] = data;
         
         // Emit the updated cities list
-        this.cities.next(cities);
+        this.http.cities_data.update(() => cities);
         
         // Update the selected city
         this.selectedCity = data;
 
         // Debug logs (can be removed in production)
         console.log(this.selectedCity, cities);
-      }
-        this.filteredCities()
-          }
+      }          }
         },
         error: (error: HttpErrorResponse) => {
           console.error('Failed to load forecast:', error);
         }
       });
-  }
-  
-  filteredCities() {
-    return this.cities.value.filter((city: any) =>
-      city.city.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
   }
   
   
@@ -136,6 +125,10 @@ this.filteredCities()
         alert('Failed to refresh city');
       }
     });
+  }
+
+  convertToDate(timestamp: number): Date {
+    return new Date(timestamp * 1000); // Convert seconds to milliseconds
   }
 
   ngOnDestroy(): void {

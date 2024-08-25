@@ -11,15 +11,10 @@ import { Observable } from 'rxjs';
   templateUrl: './counter-app.component.html',
   styleUrl: './counter-app.component.css'
 })
-export class CounterAppComponent implements OnInit {
-  counters$!: Observable<Counter[]>;
+export class CounterAppComponent {
   counterId = 0;
 
   constructor(public counterService: WeatherrserivcesService) {}
-
-  ngOnInit(): void {
-    this.counters$ = this.counterService.counterData$;
-  }
 
   addCounter() {
     // const count_data:any = this.counterService.counterData$.value;
