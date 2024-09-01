@@ -6,7 +6,7 @@
           <!-- <a class="nav-link active" aria-current="page" routerLink="/counter">Counter <span
               class="badge bg-secondary">{{ (counterCount$ | async)?.length }}</span></a> -->
               <a class="nav-link active" aria-current="page" routerLink="/counter" routerLinkActive="active">Counter <span
-                class="badge bg-secondary">{{ counterService.counter_data().length }}</span></a>
+                class="badge bg-secondary">{{ counterCount$ | async }}</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" routerLink="/wheater" routerLinkActive="active">Wheater</a>
